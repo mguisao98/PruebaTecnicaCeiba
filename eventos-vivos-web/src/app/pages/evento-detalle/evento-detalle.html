@@ -1,0 +1,98 @@
+<div class="page">
+  <a class="back-link" routerLink="/eventos">← Volver al catálogo</a>
+
+  <div *ngIf="cargando" class="state-message state-loading">
+    <span class="spinner"></span> Cargando evento...
+  </div>
+
+  <div *ngIf="error && !cargando" class="state-message state-error">{{ error }}</div>
+
+  <div *ngIf="!cargando && evento" class="detalle-layout">
+    <!-- Panel principal -->
+    <section class="panel-main">
+      <div class="event-header">
+        <div class="event-badges">
+          <span class="badge" [ngClass]="'badge-tipo-' + evento.tipo">{{ evento.tipo | tipoEvento }}</span>
+          <span class="badge" [ngClass]="'badge-estado-' + evento.estado">{{ evento.estado | estadoEvento }}</span>
+        </div>
+        <h1>{{ evento.titulo }}</h1>
+        <p class="event-desc">{{ evento.descripcion }}</p>
+      </div>
+
+      <ul class="info-list">
+        <li>
+          <span class="info-label">Venue</span>
+          <span class="info-value">
+            {{ evento.venue?.nombre ?? 'Sin venue' }}
+            <span class="info-sub" *ngIf="evento.venue?.ciudad"> — {{ evento.venue?.ciudad }}</span>
+          </span>
+        </li>
+        <li>
+          <span class="info-label">Capacidad máxima</span>
+          <span class="info-value">{{ evento.capacidadMaxima }} personas</span>
+        </li>
+        <li>
+          <span class="info-label">Fecha de inicio</span>
+          <span class="info-value">{{ formatDate(evento.fechaInicio) }}</span>
+        </li>
+        <li>
+          <span class="info-label">Fecha de fin</span>
+          <span class="info-value">{{ formatDate(evento.fechaFin) }}</span>
+        </li>
+        <li>
+          <span class="info-label">Precio por entrada</span>
+          <span class="info-value price">{{ evento.precioEntrada | currency:'USD':'symbol':'1.2-2' }}</span>
+        </li>
+      </ul>
+
+      <!-- Acciones -->
+      <div class="actions">
+        <a *ngIf="esActivo" class="btn btn-primary" [routerLink]="['/reservar', evento.id]">
+          Reservar entradas
+        </a>
+        <a class="btn btn-admin" [routerLink]="['/admin/evento', evento.id]">
+          Panel de administración
+        </a>
+      </div>
+    </section>
+
+    <!-- Panel de reporte -->
+    <section class="panel-report">
+      <h2>Reporte de ocupación</h2>
+
+      <div *ngIf="cargandoReporte" class="state-message state-loading">
+        <span class="spinner"></span> Calculando reporte...
+      </div>
+
+      <div *ngIf="!cargandoReporte && reporte" class="report-grid">
+        <div class="stat-card">
+          <span class="stat-value">{{ reporte.entradasVendidas }}</span>
+          <span class="stat-label">Entradas vendidas</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">{{ reporte.entradasDisponibles }}</span>
+          <span class="stat-label">Disponibles</span>
+        </div>
+        <div class="stat-card stat-card-highlight">
+          <span class="stat-value">{{ reporte.ocupacion | number:'1.1-1' }}%</span>
+          <span class="stat-label">Ocupación</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">{{ reporte.ingresos | currency:'USD':'symbol':'1.2-2' }}</span>
+          <span class="stat-label">Ingresos confirmados</span>
+        </div>
+      </div>
+
+      <!-- Barra de progreso -->
+      <div *ngIf="!cargandoReporte && reporte" class="progress-section">
+        <div class="progress-label">
+          <span>{{ reporte.entradasVendidas }} / {{ reporte.capacidadMaxima }}</span>
+          <span>{{ reporte.ocupacion | number:'1.1-1' }}% ocupado</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="reporte.ocupacion"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

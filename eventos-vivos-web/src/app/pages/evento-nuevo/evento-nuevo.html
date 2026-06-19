@@ -1,0 +1,91 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <a class="back-link" routerLink="/eventos">← Volver al catálogo</a>
+      <h2>Crear nuevo evento</h2>
+    </div>
+  </div>
+
+  <div *ngIf="exito" class="state-message state-success">{{ exito }}</div>
+  <div *ngIf="error" class="state-message state-error">{{ error }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="crear()" class="form-card" novalidate>
+    <div class="form-grid">
+      <!-- Título -->
+      <div class="field field-full">
+        <label for="titulo">Título <span class="required">*</span></label>
+        <input id="titulo" type="text" formControlName="titulo" placeholder="Ej: Conferencia de tecnología 2026" />
+        <span class="field-error" *ngIf="fieldError('titulo')">{{ fieldError('titulo') }}</span>
+        <span class="field-hint">{{ f['titulo'].value?.length ?? 0 }} / 100 caracteres</span>
+      </div>
+
+      <!-- Descripción -->
+      <div class="field field-full">
+        <label for="descripcion">Descripción <span class="required">*</span></label>
+        <textarea id="descripcion" formControlName="descripcion" rows="3" placeholder="Describe el evento en detalle..."></textarea>
+        <span class="field-error" *ngIf="fieldError('descripcion')">{{ fieldError('descripcion') }}</span>
+        <span class="field-hint">{{ f['descripcion'].value?.length ?? 0 }} / 500 caracteres</span>
+      </div>
+
+      <!-- Venue -->
+      <div class="field">
+        <label for="venueId">Venue <span class="required">*</span></label>
+        <select id="venueId" formControlName="venueId">
+          <option value="">— Selecciona un venue —</option>
+          <option *ngFor="let v of venues" [value]="v.id">
+            {{ v.nombre }} ({{ v.ciudad }}) — cap. {{ v.capacidad }}
+          </option>
+        </select>
+        <span class="field-error" *ngIf="fieldError('venueId')">{{ fieldError('venueId') }}</span>
+      </div>
+
+      <!-- Tipo -->
+      <div class="field">
+        <label for="tipo">Tipo de evento <span class="required">*</span></label>
+        <select id="tipo" formControlName="tipo">
+          <option value="">— Selecciona el tipo —</option>
+          <option *ngFor="let t of tiposEvento" [value]="t.value">{{ t.label }}</option>
+        </select>
+        <span class="field-error" *ngIf="fieldError('tipo')">{{ fieldError('tipo') }}</span>
+      </div>
+
+      <!-- Capacidad máxima -->
+      <div class="field">
+        <label for="capacidadMaxima">Capacidad máxima <span class="required">*</span></label>
+        <input id="capacidadMaxima" type="number" min="1" formControlName="capacidadMaxima" placeholder="Ej: 100" />
+        <span class="field-error" *ngIf="fieldError('capacidadMaxima')">{{ fieldError('capacidadMaxima') }}</span>
+        <span class="field-hint">No puede superar la capacidad del venue.</span>
+      </div>
+
+      <!-- Precio -->
+      <div class="field">
+        <label for="precioEntrada">Precio por entrada (USD) <span class="required">*</span></label>
+        <input id="precioEntrada" type="number" min="0.01" step="0.01" formControlName="precioEntrada" placeholder="Ej: 50.00" />
+        <span class="field-error" *ngIf="fieldError('precioEntrada')">{{ fieldError('precioEntrada') }}</span>
+      </div>
+
+      <!-- Fecha inicio -->
+      <div class="field">
+        <label for="fechaInicio">Fecha y hora de inicio <span class="required">*</span></label>
+        <input id="fechaInicio" type="datetime-local" formControlName="fechaInicio" />
+        <span class="field-error" *ngIf="fieldError('fechaInicio')">{{ fieldError('fechaInicio') }}</span>
+        <span class="field-hint">Debe ser una fecha futura.</span>
+      </div>
+
+      <!-- Fecha fin -->
+      <div class="field">
+        <label for="fechaFin">Fecha y hora de fin <span class="required">*</span></label>
+        <input id="fechaFin" type="datetime-local" formControlName="fechaFin" />
+        <span class="field-error" *ngIf="fieldError('fechaFin')">{{ fieldError('fechaFin') }}</span>
+        <span class="field-hint">Debe ser posterior al inicio.</span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="enviando">
+        {{ enviando ? 'Creando evento...' : 'Crear evento' }}
+      </button>
+      <a class="btn btn-ghost" routerLink="/eventos">Cancelar</a>
+    </div>
+  </form>
+</div>

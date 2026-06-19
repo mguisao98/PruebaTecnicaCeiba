@@ -1,0 +1,223 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.back-link {
+  font-size: 0.875rem;
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.back-link:hover { text-decoration: underline; }
+
+.admin-header {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.admin-header h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.header-meta-text {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+/* Summary bar */
+.summary-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.summary-item {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.summary-item-warn { border-color: #fcd34d; background: #fffbeb; }
+
+.summary-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.summary-item-warn .summary-value { color: #b45309; }
+
+.summary-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+/* Table */
+.table-wrapper {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.reservas-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.reservas-table thead th {
+  background: #f8fafc;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.reservas-table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.1s;
+}
+
+.reservas-table tbody tr:last-child { border-bottom: none; }
+.reservas-table tbody tr:hover { background: #fafafa; }
+
+.reservas-table td {
+  padding: 0.85rem 1rem;
+  color: #374151;
+  vertical-align: middle;
+}
+
+.col-id { color: #94a3b8; font-size: 0.8rem; }
+.col-nombre { font-weight: 600; color: #0f172a; }
+.col-email { color: #64748b; font-size: 0.82rem; }
+.col-cantidad { font-weight: 700; text-align: center; }
+.col-codigo .codigo { font-family: monospace; font-size: 0.85rem; color: #2563eb; font-weight: 600; }
+.col-empty { color: #cbd5e1; }
+.col-fecha { font-size: 0.82rem; color: #64748b; white-space: nowrap; }
+.col-acciones { min-width: 200px; }
+
+.acciones-grupo {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-tipo-0 { background: #eff6ff; color: #1d4ed8; }
+.badge-tipo-1 { background: #fdf4ff; color: #7e22ce; }
+.badge-tipo-2 { background: #fff7ed; color: #c2410c; }
+.badge-estado-0 { background: #dcfce7; color: #15803d; }
+.badge-estado-1 { background: #fef2f2; color: #dc2626; }
+.badge-estado-2 { background: #f1f5f9; color: #475569; }
+
+.badge-pendiente  { background: #fef3c7; color: #92400e; }
+.badge-confirmada { background: #dcfce7; color: #15803d; }
+.badge-cancelada  { background: #fef2f2; color: #dc2626; }
+.badge-perdida    { background: #f1f5f9; color: #475569; }
+.badge-pagada     { background: #dbeafe; color: #1e40af; }
+
+/* Action buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.85rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-confirm { background: #dcfce7; color: #15803d; }
+.btn-confirm:not(:disabled):hover { background: #bbf7d0; }
+
+.btn-cancel { background: #fef2f2; color: #dc2626; }
+.btn-cancel:not(:disabled):hover { background: #fecaca; }
+
+.row-msg {
+  font-size: 0.75rem;
+  margin-top: 0.35rem;
+  font-weight: 500;
+}
+
+.row-msg-ok  { color: #15803d; }
+.row-msg-err { color: #dc2626; }
+
+/* Estado messages */
+.state-message {
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.state-loading { background: #f8fafc; color: #374151; }
+.state-error   { background: #fef2f2; color: #b91c1c; }
+.state-empty   { background: #f8fafc; color: #64748b; border-radius: 0; }
+
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #cbd5e1;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 768px) {
+  .summary-bar { grid-template-columns: repeat(2, 1fr); }
+  .table-wrapper { overflow-x: auto; }
+  .reservas-table { min-width: 700px; }
+}

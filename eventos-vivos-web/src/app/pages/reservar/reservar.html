@@ -1,0 +1,119 @@
+<div class="page">
+  <a class="back-link" [routerLink]="evento ? ['/eventos', evento.id] : ['/eventos']">← Volver al evento</a>
+
+  <div *ngIf="cargando" class="state-message state-loading">
+    <span class="spinner"></span> Cargando información del evento...
+  </div>
+
+  <div *ngIf="error && !cargando && !enviando" class="state-message state-error">{{ error }}</div>
+
+  <!-- Confirmación exitosa -->
+  <div *ngIf="reservaCreada" class="success-card">
+    <div class="success-icon">✓</div>
+    <h2>Reserva creada correctamente</h2>
+    <p>Tu reserva está <strong>pendiente de pago</strong>. El administrador debe confirmarla.</p>
+
+    <dl class="success-details">
+      <div>
+        <dt>Evento</dt>
+        <dd>{{ evento?.titulo }}</dd>
+      </div>
+      <div>
+        <dt>Entradas</dt>
+        <dd>{{ reservaCreada.cantidad }}</dd>
+      </div>
+      <div>
+        <dt>Comprador</dt>
+        <dd>{{ reservaCreada.nombreComprador }}</dd>
+      </div>
+      <div>
+        <dt>Email</dt>
+        <dd>{{ reservaCreada.emailComprador }}</dd>
+      </div>
+      <div *ngIf="reservaCreada.codigoReserva">
+        <dt>Código</dt>
+        <dd class="codigo">{{ reservaCreada.codigoReserva }}</dd>
+      </div>
+    </dl>
+
+    <a class="btn btn-primary" [routerLink]="['/eventos', evento?.id]">Volver al evento</a>
+  </div>
+
+  <!-- Formulario de reserva -->
+  <div *ngIf="!cargando && evento && !reservaCreada" class="reserva-layout">
+    <section class="form-panel">
+      <h2>Reservar entradas</h2>
+
+      <div *ngIf="error && enviando === false" class="state-message state-error">{{ error }}</div>
+
+      <form [formGroup]="form" (ngSubmit)="reservar()" novalidate>
+        <div class="field">
+          <label for="cantidad">Número de entradas <span class="required">*</span></label>
+          <input
+            id="cantidad"
+            type="number"
+            min="1"
+            [max]="cuposDisponibles"
+            formControlName="cantidad"
+          />
+          <span class="field-error" *ngIf="fieldError('cantidad')">{{ fieldError('cantidad') }}</span>
+        </div>
+
+        <div class="field">
+          <label for="nombre">Nombre del comprador <span class="required">*</span></label>
+          <input id="nombre" type="text" formControlName="nombreComprador" placeholder="Nombre completo" />
+          <span class="field-error" *ngIf="fieldError('nombreComprador')">{{ fieldError('nombreComprador') }}</span>
+        </div>
+
+        <div class="field">
+          <label for="email">Correo electrónico <span class="required">*</span></label>
+          <input id="email" type="email" formControlName="emailComprador" placeholder="ejemplo@correo.com" />
+          <span class="field-error" *ngIf="fieldError('emailComprador')">{{ fieldError('emailComprador') }}</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="enviando">
+          {{ enviando ? 'Procesando...' : 'Confirmar reserva' }}
+        </button>
+      </form>
+    </section>
+
+    <!-- Resumen del evento -->
+    <aside class="summary-panel">
+      <h3>Resumen del evento</h3>
+
+      <div class="summary-row">
+        <span>Evento</span>
+        <strong>{{ evento.titulo }}</strong>
+      </div>
+      <div class="summary-row">
+        <span>Tipo</span>
+        <strong>{{ evento.tipo | tipoEvento }}</strong>
+      </div>
+      <div class="summary-row">
+        <span>Venue</span>
+        <strong>{{ evento.venue?.nombre ?? '—' }}</strong>
+      </div>
+      <div class="summary-row">
+        <span>Inicio</span>
+        <strong>{{ formatDate(evento.fechaInicio) }}</strong>
+      </div>
+      <div class="summary-divider"></div>
+      <div class="summary-row">
+        <span>Precio unitario</span>
+        <strong>{{ evento.precioEntrada | currency:'USD':'symbol':'1.2-2' }}</strong>
+      </div>
+      <div class="summary-row">
+        <span>Cantidad</span>
+        <strong>{{ form.get('cantidad')?.value ?? 1 }}</strong>
+      </div>
+      <div class="summary-total">
+        <span>Total estimado</span>
+        <strong>{{ (evento.precioEntrada * (form.get('cantidad')?.value ?? 1)) | currency:'USD':'symbol':'1.2-2' }}</strong>
+      </div>
+      <div class="availability" [class.low]="cuposDisponibles <= 5">
+        <span class="availability-dot"></span>
+        {{ cuposDisponibles }} cupos disponibles
+      </div>
+    </aside>
+  </div>
+</div>

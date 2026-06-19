@@ -1,0 +1,13 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / tools
+.vscode/
+.idea/
+*.swp
+
+# Claude Code / Playwright MCP (tool-generated)
+.playwright-mcp/
+.claude/

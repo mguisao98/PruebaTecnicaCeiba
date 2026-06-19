@@ -1,0 +1,21 @@
+<div class="app-shell">
+  <header class="top-bar">
+    <a class="brand" routerLink="/eventos">
+      <span class="brand-icon">🎭</span>
+      <span class="brand-name">EventosVivos</span>
+    </a>
+
+    <nav class="main-nav">
+      <a class="nav-link" routerLink="/eventos" routerLinkActive="nav-link-active" [routerLinkActiveOptions]="{ exact: true }">
+        Eventos
+      </a>
+      <a class="nav-link nav-link-cta" routerLink="/eventos/nuevo">
+        + Crear evento
+      </a>
+    </nav>
+  </header>
+
+  <main class="content-panel">
+    <router-outlet />
+  </main>
+</div>

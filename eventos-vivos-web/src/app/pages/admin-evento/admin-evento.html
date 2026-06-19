@@ -1,0 +1,103 @@
+<div class="page">
+  <a class="back-link" [routerLink]="evento ? ['/eventos', evento.id] : ['/eventos']">← Volver al evento</a>
+
+  <div *ngIf="cargando" class="state-message state-loading">
+    <span class="spinner"></span> Cargando panel de administración...
+  </div>
+
+  <div *ngIf="error && !cargando" class="state-message state-error">{{ error }}</div>
+
+  <div *ngIf="!cargando && evento">
+    <!-- Cabecera del evento -->
+    <div class="admin-header">
+      <div>
+        <p class="eyebrow">Panel de Administración</p>
+        <h2>{{ evento.titulo }}</h2>
+        <div class="header-meta">
+          <span class="badge" [ngClass]="'badge-tipo-' + evento.tipo">{{ evento.tipo | tipoEvento }}</span>
+          <span class="badge" [ngClass]="'badge-estado-' + evento.estado">{{ evento.estado | estadoEvento }}</span>
+          <span class="header-meta-text">{{ evento.venue?.nombre }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resumen -->
+    <div class="summary-bar">
+      <div class="summary-item">
+        <span class="summary-value">{{ reservas.length }}</span>
+        <span class="summary-label">Total reservas</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-value">{{ totalConfirmadas }}</span>
+        <span class="summary-label">Entradas confirmadas</span>
+      </div>
+      <div class="summary-item summary-item-warn">
+        <span class="summary-value">{{ totalPendientes }}</span>
+        <span class="summary-label">Pendientes de pago</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-value">{{ evento.capacidadMaxima }}</span>
+        <span class="summary-label">Capacidad máxima</span>
+      </div>
+    </div>
+
+    <!-- Tabla de reservas -->
+    <div class="table-wrapper">
+      <div *ngIf="reservas.length === 0" class="state-message state-empty">
+        No hay reservas para este evento.
+      </div>
+
+      <table *ngIf="reservas.length > 0" class="reservas-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Comprador</th>
+            <th>Email</th>
+            <th>Entradas</th>
+            <th>Estado</th>
+            <th>Código</th>
+            <th>Fecha pago</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of reservas">
+            <td class="col-id">{{ r.id }}</td>
+            <td class="col-nombre">{{ r.nombreComprador }}</td>
+            <td class="col-email">{{ r.emailComprador }}</td>
+            <td class="col-cantidad">{{ r.cantidad }}</td>
+            <td>
+              <span class="badge" [ngClass]="getEstadoClase(r.estado)">{{ r.estado | estadoReserva }}</span>
+            </td>
+            <td class="col-codigo">
+              <span *ngIf="r.codigoReserva" class="codigo">{{ r.codigoReserva }}</span>
+              <span *ngIf="!r.codigoReserva" class="col-empty">—</span>
+            </td>
+            <td class="col-fecha">{{ formatDate(r.fechaPago) }}</td>
+            <td class="col-acciones">
+              <div class="acciones-grupo">
+                <button
+                  *ngIf="puedeConfirmar(r)"
+                  class="btn btn-confirm"
+                  [disabled]="r.procesando"
+                  (click)="confirmarPago(r)">
+                  {{ r.procesando ? '...' : 'Confirmar pago' }}
+                </button>
+                <button
+                  *ngIf="puedeCancelar(r)"
+                  class="btn btn-cancel"
+                  [disabled]="r.procesando"
+                  (click)="cancelarReserva(r)">
+                  {{ r.procesando ? '...' : 'Cancelar' }}
+                </button>
+              </div>
+
+              <div *ngIf="r.mensajeExito" class="row-msg row-msg-ok">{{ r.mensajeExito }}</div>
+              <div *ngIf="r.mensajeError" class="row-msg row-msg-err">{{ r.mensajeError }}</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
