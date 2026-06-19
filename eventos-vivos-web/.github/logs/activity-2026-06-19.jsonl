@@ -1,0 +1,10 @@
+{"type":"CREACION_SESION","sessionId":"a2bc138f-1848-41b2-8222-5861f00a6c09","startedAt":"2026-06-19T05:18:11.975Z","cwd":"c:\\Users\\mafel\\source\\repos\\PruebaCeiba\\PruebaTecnicaCeiba\\eventos-vivos-web"}
+{"type":"INTERACCION","sessionId":"a2bc138f-1848-41b2-8222-5861f00a6c09","timestamp":"2026-06-19T05:18:12.577Z","prompt":"hola ayudame  aejecutar este proyecto"}
+{"type":"FIN_INTERACCION","sessionId":"a2bc138f-1848-41b2-8222-5861f00a6c09","timestamp":"2026-06-19T05:18:28.148Z"}
+{"type":"CREACION_SESION","sessionId":"a2bc138f-1848-41b2-8222-5861f00a6c09","startedAt":"2026-06-19T05:19:11.682Z","cwd":"c:\\Users\\mafel\\source\\repos\\PruebaCeiba\\PruebaTecnicaCeiba\\eventos-vivos-web"}
+{"type":"INTERACCION","sessionId":"a2bc138f-1848-41b2-8222-5861f00a6c09","timestamp":"2026-06-19T05:19:12.209Z","prompt":"hola ayudame  aejecutar este proyecto"}
+{"type":"FIN_INTERACCION","sessionId":"a2bc138f-1848-41b2-8222-5861f00a6c09","timestamp":"2026-06-19T05:19:13.189Z"}
+{"type":"INTERACCION","sessionId":"a2bc138f-1848-41b2-8222-5861f00a6c09","timestamp":"2026-06-19T05:19:37.864Z","prompt":"por que me mandas para alla?"}
+{"type":"FIN_INTERACCION","sessionId":"a2bc138f-1848-41b2-8222-5861f00a6c09","timestamp":"2026-06-19T05:19:38.845Z"}
+{"type":"INTERACCION","sessionId":"a2bc138f-1848-41b2-8222-5861f00a6c09","timestamp":"2026-06-19T12:07:02.851Z","prompt":"hola mira que me esta ejecutando pero me sale No se pudieron cargar los eventos. Verifica la conexi├│n con la API.\r\npor que ?"}
+{"type":"FIN_INTERACCION","sessionId":"a2bc138f-1848-41b2-8222-5861f00a6c09","timestamp":"2026-06-19T12:07:04.406Z"}

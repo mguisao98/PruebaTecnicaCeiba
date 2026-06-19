@@ -1,22 +1,112 @@
----
+📘 Eventos Vivos Core API — Backend
+Ubicación: EventosVivos.API/README.md
 
-### 2. 📁 README del Backend (Ubicación: `EventosVivos.API/README.md`)
+Este proyecto implementa el núcleo de servicios RESTful para el sistema de reservas Eventos Vivos.
+Centraliza la lógica de negocio, validaciones y reglas operativas que garantizan la integridad del sistema.
 
-```markdown
-# Eventos Vivos Core API - Backend
+⚙️ 1. Requisitos para la ejecución local
+✔️ Dependencias necesarias
+.NET SDK 8.0+
 
-Este proyecto representa el núcleo de servicios web (API RESTful) para el sistema de reservas de **Eventos Vivos**[cite: 10, 67]. Centraliza la lógica transaccional y valida el cumplimiento estricto de todas las directrices operativas del negocio[cite: 57].
+Git (opcional)
 
-## ⚙️ Requisitos para la Ejecución Local
+Navegador moderno (para Swagger)
 
-### Dirección y Puerto Base
-Por motivos de configuración de seguridad, políticas de CORS e integración directa con el cliente de Angular, la API está configurada por defecto para correr bajo **HTTPS** en la siguiente URL fija:
-* **URL Base:** `https://localhost:7258`
+✔️ Dirección y puerto base
+La API está configurada para ejecutarse por defecto en:
 
-### Instrucciones de Arranque
-1. Asegúrate de estar dentro del directorio del backend:
-   ```bash
-   cd EventosVivos.API
-Restaura los paquetes NuGet del proyecto:Bashdotnet restore
-Compila y ejecuta la aplicación en modo desarrollo:Bashdotnet run
-Una vez en ejecución, puedes explorar e interactuar directamente con los endpoints utilizando la interfaz de Swagger en:🔗 https://localhost:7258/swagger💡 Reglas de Negocio Implementadas (Core del Negocio)La API garantiza de manera automatizada las siguientes directrices extraídas de los requerimientos:RN-01 & RN-02 (Validación de Venue): Impide la creación de un evento que supere el aforo del recinto asignado. Bloquea de forma automática la superposición de horarios para eventos activos en un mismo lugar.  RN-03 (Horario Nocturno): Restringe el inicio de eventos en fines de semana (sábados y domingos) para que no comiencen después de las 22:00.  RN-04 (Reserva Tardía): No se admiten reservas si falta menos de 1 hora para el inicio del evento.  RN-05 & RF-03 (Límites Dinámicos de Transacción): Aplica un máximo de 5 entradas por transacción si restan menos de 24 horas para iniciar el evento , y un límite de 10 entradas si el precio supera los $100.  RN-06 (Estado Automático): Transiciona los eventos a estado completado de forma automática cuando el reloj del sistema supera la fecha de fin establecida.  RN-07 (Penalización de Cancelación): Si una reserva confirmada se cancela a menos de 48 horas del evento, se registra como "perdida" (no libera inventario para la venta y se aísla únicamente para reportes de auditoría).  🧪 Pruebas AutomatizadasSe dispone de una suite de pruebas unitarias enfocada en blindar la lógica de las reglas de negocio ante cualquier refactorización. Para ejecutarlas:  Bashdotnet test
+Código
+https://localhost:7258
+Esto permite integración directa con el frontend Angular sin necesidad de configurar CORS adicionales.
+
+🚀 2. Cómo ejecutar el backend
+1️⃣ Entrar al directorio del backend
+bash
+cd EventosVivos.API
+2️⃣ Restaurar dependencias
+bash
+dotnet restore
+3️⃣ Ejecutar la API
+bash
+dotnet run
+Si todo está correcto, verás algo como:
+
+Código
+Now listening on: https://localhost:7258
+📚 3. Documentación Swagger
+Puedes explorar y probar todos los endpoints desde:
+
+Código
+https://localhost:7258/swagger
+Incluye:
+
+Crear eventos
+
+Listar y filtrar
+
+Crear reservas
+
+Confirmar pagos
+
+Cancelar reservas
+
+Reportes de ocupación
+
+🧠 4. Reglas de negocio implementadas
+La API implementa automáticamente todas las reglas del documento de requerimientos:
+
+🟦 RN-01 & RN-02 — Validación de Venue
+No permite crear eventos que excedan la capacidad del venue.
+
+Impide superposición de horarios en el mismo venue.
+
+🟦 RN-03 — Restricción nocturna
+Eventos en sábado o domingo no pueden iniciar después de las 22:00.
+
+🟦 RN-04 — Reserva tardía
+No se permiten reservas si falta menos de 1 hora para el evento.
+
+🟦 RN-05 — Límites dinámicos de entradas
+Máximo 5 entradas si faltan menos de 24 horas.
+
+Máximo 10 entradas si el precio supera $100.
+
+🟦 RN-06 — Estado automático
+Un evento pasa a completado cuando su hora de fin ya pasó.
+
+🟦 RN-07 — Cancelación con penalización
+Si una reserva confirmada se cancela con menos de 48 horas, se marca como perdida (no libera cupos).
+
+🧪 5. Pruebas automatizadas
+El proyecto incluye pruebas unitarias para validar reglas de negocio y flujos principales.
+
+Para ejecutarlas:
+
+bash
+dotnet test
+🔌 6. Endpoints principales
+Recurso	Método	Ruta
+Listar eventos	GET	/api/Eventos
+Filtrar eventos	GET	/api/Eventos/filtrar
+Crear evento	POST	/api/Eventos
+Reporte	GET	/api/Eventos/{id}/reporte-ocupacion
+Crear reserva	POST	/api/Reservas
+Confirmar pago	PUT	/api/Reservas/confirmar/{id}
+Cancelar reserva	PUT	/api/Reservas/cancelar/{id}
+Listar venues	GET	/api/Venues
+
+
+🟢 7. Integración con el frontend
+El frontend Angular ya está configurado para consumir directamente:
+
+Código
+https://localhost:7258/api
+Por lo tanto:
+
+Primero ejecuta el backend
+
+Luego ejecuta el frontend con:
+
+bash
+ng serve -o
+No requiere proxy ni configuraciones adicionales.

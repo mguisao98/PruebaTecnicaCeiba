@@ -5,7 +5,9 @@ import { CrearReservaDto, Reserva } from '../models/evento.model';
 
 @Injectable({ providedIn: 'root' })
 export class ReservaService {
-  private readonly baseUrl = '/api/Reservas';
+  // private readonly baseUrl = '/api/Reservas';
+  private readonly baseUrl = 'https://localhost:7258/api/Reservas';
+
   private http = inject(HttpClient);
 
   crear(reserva: CrearReservaDto): Observable<Reserva> {

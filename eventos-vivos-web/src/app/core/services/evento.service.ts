@@ -5,7 +5,10 @@ import { CrearEventoDto, Evento, EventoFiltro, ReporteOcupacion } from '../model
 
 @Injectable({ providedIn: 'root' })
 export class EventoService {
-  private readonly baseUrl = '/api/Eventos';
+  // private readonly baseUrl = '/api/Eventos';
+private readonly baseUrl = 'https://localhost:7258/api/Eventos';
+
+
   private http = inject(HttpClient);
 
   listar(): Observable<Evento[]> {

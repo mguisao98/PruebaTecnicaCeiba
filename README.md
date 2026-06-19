@@ -1,22 +1,188 @@
-# Eventos Vivos - Sistema de Reservas y Gestión Cultural
+📘 Eventos Vivos – Sistema de Gestión de Eventos y Reservas
+Repositorio Principal
 
-[cite_start]**Eventos Vivos** es una solución web fullstack modular diseñada para automatizar la gestión de eventos, controlar el aforo en tiempo real y mitigar los problemas de sobreventa o conflictos de horarios en recintos culturales[cite: 5, 6, 7, 8].
+Este proyecto implementa una solución completa para la gestión de eventos, reservas, control de aforo y reportes analíticos para la plataforma Eventos Vivos.
+Incluye:
 
-La solución se compone de dos aplicaciones totalmente desacopladas:
-1. [cite_start]**EventosVivos.API (Backend):** Construido en .NET Core[cite: 3]. [cite_start]Actúa como el núcleo transaccional, exponiendo servicios RESTful y asegurando el cumplimiento estricto de las reglas de negocio[cite: 10, 57, 67].
-2. [cite_start]**EventosVivos.Web (Frontend):** Una Single Page Application (SPA) desarrollada en Angular que consume la API para ofrecer una interfaz administrativa y de usuario intuitiva[cite: 68].
+Backend en .NET 8 (API RESTful)
 
----
+Frontend en Angular 18 + Vite
 
-## 📐 Estructura del Proyecto
+Reglas de negocio avanzadas
 
-```text
-📁 eventos-vivos-root/
- ├── 📁 EventosVivos.API/    # Proyecto Backend (.NET Core)
- └── 📁 EventosVivos.Web/    # Proyecto Frontend (Angular)
-⚙️ Requisitos PreviosAntes de comenzar, asegúrate de tener instalado en tu entorno local:.NET SDK 8.0+ (o la última versión estable)Node.js (v18.x o superior recomendado) y npmAngular CLI instalado globalmente (npm install -g @angular/cli)🚀 Ejecución Rápida del Sistema CompletoPara levantar toda la plataforma localmente, sigue estos pasos en orden:Paso 1: Levantar el BackendAbre una terminal y navega a la carpeta del backend:Bashcd EventosVivos.API
-Ejecuta el proyecto:Bashdotnet run
-El servicio web se iniciará de forma segura en: https://localhost:7258.  Paso 2: Levantar el FrontendAbre una nueva terminal y navega a la carpeta del frontend:Bashcd EventosVivos.Web
-Instala las dependencias necesarias de Node:Bashnpm install
-Inicia el servidor de desarrollo:Bashng serve
-Accede a la aplicación desde tu navegador en: http://localhost:4200.🛠️ Arquitectura y Justificación TécnicaClean Architecture / N-Capas: Aplicada en el Backend para aislar las reglas de negocio críticas (como la prevención de solapamiento de horarios o penalizaciones por cancelación) de la persistencia de datos y de la capa de presentación.  Persistencia Desacoplada: Implementación del patrón Repository que facilita el uso de bases de datos en memoria para testing y desarrollo ágil, con la flexibilidad de migrar a SQL Server o PostgreSQL sin alterar el dominio.  Diseño Orientado a Componentes y Servicios: En el frontend se modularizan las vistas de creación, listado y reportes utilizando servicios inyectables de Angular para centralizar la comunicación HTTP con tipado fuerte en TypeScript.  
+Pruebas automatizadas
+
+Arquitectura modular y mantenible
+
+🏗️ Arquitectura General
+El sistema está dividido en dos aplicaciones independientes:
+
+Código
+/EventosVivos.API      → Backend .NET 8 (REST API)
+/EventosVivos.Web      → Frontend Angular 18 (SPA)
+Ambas se comunican mediante HTTP usando rutas directas:
+
+Código
+https://localhost:7258/api
+No se requiere proxy ni configuraciones adicionales.
+
+🚀 1. Requisitos Previos
+✔ Backend
+.NET SDK 8.0+
+
+Navegador moderno (para Swagger)
+
+✔ Frontend
+Node.js 18+
+
+npm 9+
+
+Angular CLI 17+
+
+🔧 2. Ejecución del Backend (.NET 8)
+Ubicación: /EventosVivos.API
+
+1️⃣ Restaurar dependencias
+bash
+cd EventosVivos.API
+dotnet restore
+2️⃣ Ejecutar la API
+bash
+dotnet run
+La API se ejecutará en:
+
+Código
+https://localhost:7258
+3️⃣ Documentación Swagger
+Disponible en:
+
+Código
+https://localhost:7258/swagger
+🧠 3. Reglas de Negocio Implementadas
+El backend implementa todas las reglas del documento técnico:
+
+Validación de capacidad del venue
+
+Prevención de superposición de horarios
+
+Restricción nocturna (fines de semana)
+
+Reservas tardías (menos de 1 hora)
+
+Límites dinámicos de entradas
+
+Estado automático del evento
+
+Penalización por cancelación tardía
+
+🧪 4. Pruebas Automatizadas (Backend)
+bash
+dotnet test
+Incluyen validaciones de:
+
+creación de eventos
+
+reservas
+
+confirmación y cancelación
+
+reglas de negocio
+
+reportes
+
+🌐 5. Ejecución del Frontend (Angular 18)
+Ubicación: /EventosVivos.Web
+
+1️⃣ Instalar dependencias
+bash
+cd EventosVivos.Web
+npm install
+2️⃣ Ejecutar la aplicación
+bash
+ng serve -o
+Se abrirá automáticamente:
+
+Código
+http://localhost:4200
+🔌 6. Conexión Frontend ↔ Backend
+Los servicios Angular ya están configurados con URLs directas:
+
+ts
+private readonly baseUrl = 'https://localhost:7258/api/Eventos';
+Esto significa:
+
+✔ No se necesita proxy
+✔ No se edita angular.json
+✔ No se usa ng serve --proxy-config
+
+Solo debes:
+
+Ejecutar backend
+
+Ejecutar frontend
+
+Listo
+
+🗂️ 7. Estructura del Repositorio
+Código
+/
+├── EventosVivos.API/        → Backend .NET 8
+│     ├── Controllers/
+│     ├── Application/
+│     ├── Domain/
+│     ├── Infrastructure/
+│     └── Tests/
+│
+└── EventosVivos.Web/        → Frontend Angular 18
+      ├── src/app/
+      │     ├── core/        → servicios y modelos
+      │     ├── features/    → componentes funcionales
+      │     ├── pages/       → pantallas principales
+      │     └── shared/      → componentes reutilizables
+      └── assets/
+🟢 8. Flujo Completo para Ejecutar Todo el Sistema
+1️⃣ Backend
+bash
+cd EventosVivos.API
+dotnet run
+Debe mostrar:
+
+Código
+https://localhost:7258
+2️⃣ Frontend
+bash
+cd EventosVivos.Web
+npm install
+ng serve -o
+3️⃣ Abrir en navegador
+Código
+http://localhost:4200
+📝 9. Tecnologías Utilizadas
+Backend
+.NET 8
+
+Entity Framework Core InMemory
+
+Swagger
+
+FluentValidation
+
+Arquitectura por capas
+
+Frontend
+Angular 18
+
+Vite
+
+RxJS
+
+Angular Material (si aplica)
+
+Vitest (pruebas)
+
+🎯 10. Estado del Proyecto
+✔ Cumple requerimientos funcionales
+✔ Cumple reglas de negocio
+✔ Backend + Frontend totalmente funcionales
+✔ Pruebas automatizadas
+✔ Documentación completa

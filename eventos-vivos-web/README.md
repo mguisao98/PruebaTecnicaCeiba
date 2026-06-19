@@ -1,37 +1,101 @@
----
+📘 Eventos Vivos Web — Frontend
+Ubicación: EventosVivos.Web/README.md
 
-### 3. 📁 README del Frontend (Ubicación: `EventosVivos.Web/README.md`)
+Este proyecto es la interfaz web del sistema Eventos Vivos, desarrollado con Angular 18 + Vite.
+Permite gestionar eventos, reservas, reportes y administración general del sistema.
 
-```markdown
-# Eventos Vivos Web - Frontend
+🚀 1. Requisitos previos
+Antes de ejecutar el frontend, asegúrate de tener instalado:
 
-Esta aplicación es el cliente web para **Eventos Vivos**, estructurada como una SPA (Single Page Application) reactiva mediante **Angular**[cite: 68]. Su objetivo es proveer interfaces de usuario fluidas y validadas para el registro, control de reservas y visualización de reportes analíticos.
+Node.js 18+
 
-## 💻 Características Implementadas
+npm 9+
 
-* **Dashboard de Eventos (RF-02):** Panel visual con filtros combinados por tipo de evento, rangos de fechas, recintos (*venues*) y búsqueda de texto predictiva (case-insensitive)[cite: 23, 24, 25, 26, 27, 28, 29].
-* **Formularios Reactivos Validados (RF-01):** Interfaz estricta para la creación de eventos, validando en tiempo real las longitudes de los textos (Título: 5-100, Descripción: 10-500) y consistencia en el orden cronológico de las fechas[cite: 12, 13, 14, 16, 19, 20].
-* **Gestión de Reservas y Pagos (RF-03, RF-04, RF-05):** Flujos interactivos para que el usuario reserve entradas (con validaciones de formato de correo y cantidades) [cite: 30, 31, 32, 34, 35] y paneles de administración rápidos para confirmar pagos o tramitar cancelaciones[cite: 38, 39, 44, 45].
-* **Panel de Reportes (RF-06):** Pantalla dedicada que consume los cálculos analíticos de ocupación, entradas remanentes e ingresos totales capturados[cite: 50, 51, 52, 53, 54, 55].
+Angular CLI 17+
 
----
+Verifica con:
 
-## 🔧 Configuración de la API Externa
+bash
+node -v
+npm -v
+ng version
+📦 2. Instalación de dependencias
+En la carpeta del frontend:
 
-La comunicación con los servicios del servidor está centralizada en los archivos de entorno de la SPA (`src/environments/`). Por defecto, la aplicación apunta a la URL segura local del backend:
-
-* **Endpoint Destino:** `https://localhost:7258/api`
-
-*Nota: Si necesitas alterar el puerto de ejecución del Backend, recuerda reflejar dicho cambio en el archivo `environment.ts`.*
-
----
-
-## 🚀 Instrucciones de Desarrollo Local
-
-### Instalación
-Descarga todos los módulos e integraciones del ecosistema de Node instalados en el proyecto ejecutando:
-```bash
+bash
 npm install
-Servidor de DesarrolloLevanta la aplicación localmente mediante el CLI de Angular:Bashng serve
-Una vez compilado correctamente, abre tu navegador web e ingresa a: http://localhost:4200. El entorno cuenta con Hot Reload, lo que significa que cualquier cambio guardado se refrescará automáticamente en pantalla.Generar Artefactos de Producción (Build)Para compilar y optimizar la aplicación web reduciendo el peso de los bundles de cara a un despliegue en la nube, ejecuta:  Bashng build
-Los archivos optimizados resultantes se depositarán ordenadamente en la carpeta interna dist/.🧪 Pruebas UnitariasLa verificación de componentes, estados de carga y directivas de renderizado se gestiona mediante el test runner de Vitest para garantizar una ejecución veloz. Lánzalos usando:  Bashng test
+Esto descargará todos los módulos necesarios para ejecutar la aplicación.
+
+▶️ 3. Ejecutar la aplicación
+Una vez instaladas las dependencias:
+
+bash
+ng serve -o
+Esto abrirá automáticamente:
+
+Código
+http://localhost:4200
+La aplicación usa Hot Reload, por lo que cualquier cambio se refleja al instante.
+
+🔌 4. Conexión con el Backend
+El frontend está configurado para consumir directamente la API en:
+
+Código
+https://localhost:7258/api
+Esto significa:
+
+✔ No necesitas configurar proxy
+✔ No necesitas editar archivos
+✔ No necesitas parámetros adicionales en ng serve
+
+Solo asegúrate de que el backend esté ejecutándose antes de abrir el frontend:
+
+bash
+dotnet run
+Y que muestre:
+
+Código
+Now listening on: https://localhost:7258
+🗂 5. Estructura del proyecto
+Código
+src/
+ ├── app/
+ │    ├── core/
+ │    │     ├── services/   → Servicios HTTP (Eventos, Reservas, Venues)
+ │    │     └── models/     → Modelos y DTOs
+ │    ├── features/          → Componentes funcionales
+ │    ├── pages/             → Páginas principales
+ │    └── shared/            → Componentes reutilizables
+ ├── assets/
+ └── index.html
+🔧 6. Servicios HTTP (ya configurados)
+Los servicios consumen directamente la API:
+
+ts
+private readonly baseUrl = 'https://localhost:7258/api/Eventos';
+Esto garantiza que el evaluador pueda ejecutar el proyecto sin configurar nada adicional.
+
+🧪 7. Pruebas unitarias
+El proyecto usa Vitest.
+
+Para ejecutarlas:
+
+bash
+ng test
+🟢 8. Flujo recomendado para ejecutar todo el sistema
+Backend
+
+bash
+dotnet run
+Confirmar que está en https://localhost:7258.
+
+Frontend
+
+bash
+npm install
+ng serve -o
+Abrir:
+
+Código
+http://localhost:4200
+Y listo: el sistema queda completamente funcional.
